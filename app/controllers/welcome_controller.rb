@@ -24,20 +24,20 @@ class WelcomeController < ApplicationController
     end
 
     #checks that the state and city params are not empty before calling the API
-      if params[:state] != "" && params[:city] != "" && params[:state] != nil && params[:city] != nil
-      	results = HTTParty.get("http://api.wunderground.com/api/#{Figaro.env.wunderground_api_key}/geolookup/conditions/q/#{params[:state]}/#{params[:city]}.json")
+    if params[:state] != "" && params[:city] != "" && params[:state] != nil && params[:city] != nil
+      results = HTTParty.get("http://api.wunderground.com/api/#{Figaro.env.wunderground_api_key}/geolookup/conditions/q/#{params[:state]}/#{params[:city]}.json")
 		  
-
         # if no error is returned from the call, we fill our instants variables with the result of the call	 
         if results['response']['error'] == nil || results['error'] ==""  	
         	@location = results['location']['city']
         	@temp_f = results['current_observation']['temp_f']
         	@temp_c = results['current_observation']['temp_c']
-        	@weather_icon = results['current_observation']['icon_url']
+        	@weather_icon_url = results['current_observation']['icon_url']
         	@weather_words = results['current_observation']['weather']
         	@forecast_link = results['current_observation']['forecast_url']
         	@real_feel_f = results['current_observation']['feelslike_f']
         	@real_feel_c = results['current_observation']['feelslike_c']
+          @body_class = results['current_observation']['weather'].downcase
         else
           # if there is an error, we report it to our user via the @error variable 	
           @error = results['response']['error']['description']

@@ -1,7 +1,7 @@
 <div class="row">
-	<div class="col-md-6 col-md-offset-1">
+	<div class="col-md-6">
 		<div class="well">
-			<h1 class="welcome">Look Up Your Local Forecast!</h1>
+			<h3 class="welcome">Look Up Your Local Forecast!</h3>
 			<p class="welcome">What's the weather like in your city?</p>
 				<div>
 					<%= form_tag index_path do %>
@@ -9,7 +9,7 @@
 						<%= select_tag :state, options_for_select(@states), prompt: "Please select State", class: "form-control" %>
 						<br />
 						<%= submit_tag "Check Weather", class: "btn btn-primary" %>
-        	<% end %>
+					<% end %>
         </div>
 		</div>
 	</div>
@@ -34,15 +34,14 @@
 	  				<p><%= link_to "Full Forecast", @forecast_link, target: "_blank" %></p>
 	  			</div>
 	  			<div class= "col-md-12">
+	  				<br>
 	  				<p>Powered by Weather Underground</p>
 	  				<p><%= image_tag "wundergroundLogo_4c_horz.png", class: "img-responsive" %></p>
-	  				<p>Image Source: <%= @weather_icon_url %></p>
-	  				<!-- Need to figure out how to put in url of background picture -->
 				</div>
-			<% elsif @location == nil || @location == "" %>
-				<p> Enter your city and then click 'Check Weather'! </p>
+			<% elsif @error != nil %>
+				<p>Error: Please enter a valid request. <%= @error %> </p>
 			<% else %>
-				<p>Error: Please enter a valid request. <%= @error %> </p> 
+				<p> Enter your city and then click 'Check Weather' to see your local weather here! </p>
 			<% end %>
     </div>
   </div>
